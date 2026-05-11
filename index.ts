@@ -6,23 +6,20 @@ const anthropicAi = new Anthropic({
   dangerouslyAllowBrowser: true
 })
 
-const userPrompt =
-  'What is the best mothers days gift for someone who is out of town? Respond using 100 words or less.'
-
-const userMessage: Anthropic.MessageParam = {
-  role: 'user',
-  content: userPrompt
-}
-
 const msg = await anthropicAi.messages.create({
   model: process.env.AI_MODEL!,
   max_tokens: 1024,
-  messages: [userMessage]
+  messages: [
+    {
+      role: 'user',
+      content:
+        'What is the best mothers days gift for someone who is out of town? Respond using 100 words or less.'
+    }
+  ]
 })
 
 checkEnvironment()
 
-if(msg.content[0].type === 'text'){
-  console.log(msg.content[0].text);
+if (msg.content[0].type === 'text') {
+  console.log(msg.content[0].text)
 }
-
