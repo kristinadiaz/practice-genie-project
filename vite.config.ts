@@ -8,5 +8,13 @@ export default defineConfig(({ mode }) => {
       'process.env.ANTHROPIC_API_KEY': JSON.stringify(env.ANTHROPIC_API_KEY),
       'process.env.AI_MODEL': JSON.stringify(env.AI_MODEL),
     },
+    test: {
+      environment: 'happy-dom',
+      globals: true,
+      coverage: {
+        provider: 'v8',
+        include: ['util.ts', 'index.ts'],
+      },
+    },
   };
 });
