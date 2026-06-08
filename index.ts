@@ -1,5 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { checkEnvironment, autoResizeTextarea, setLoading } from './util'
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 checkEnvironment();
 
@@ -56,7 +58,10 @@ const handleGiftRequest = async (e: SubmitEvent) => {
     messages.push({ role: 'assistant', content: response.content });
     
     // Render it in #output-content
-    if (outputContent) outputContent.textContent = assistantText;
+    if (outputContent) {
+      const rawHTML = await marked(assistantText);
+      outputContent.innerHTML = DOMPurify.sanitize(rawHTML);
+    };
   } finally {
     setLoading(false);
   }
